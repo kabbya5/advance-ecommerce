@@ -1,0 +1,12 @@
+
+.active{
+    background-color: black;
+    transition: all 0.3s;
+    color:white;
+}
+.dropdown-list{
+    left:200px;
+}
+.dropdown:hover .dropdown-list{
+    display: inline-flex;
+}
