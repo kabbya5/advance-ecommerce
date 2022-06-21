@@ -11,7 +11,7 @@
         @if (Route::has('login'))    
             @auth
             <a href="" class="text-slate-900 transition duration-300/60 hover:text-slate-500 text-base"> <i class="fa-solid fa-heart text-slate-500  mr-4"></i> Wishlist </a> 
-            <a href="" class="text-slate-700 transition duration-300/60 hover:text-slate-500"> <i class="fa-solid fa-van-shuttle text-slate-500 text-base mr-4"></i> Order Tracking </a> 
+            <a href="" class="text-slate-700 transition duration-300/60 hover:text-slate-500 active"> <i class="fa-solid fa-van-shuttle text-slate-500 text-base mr-4"></i> Order Tracking </a> 
             @else
             <div class="">
                 <a href="" class="text-slate-700 transition duration-300/60 hover:text-slate-500"> <i class="fa-solid fa-user text-slate-500 text-base mr-4"></i> Login </a> 
@@ -34,7 +34,7 @@
     <div class="flex flex-col text-left my-5 transition duration-300" id="menu-list">
         <div class="border border-slate-200 text-center py-2"> Menu</div>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Home </a>
-        <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Contact </a>
+        <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800 {{ (request()->segment(2) == 'contact') ? 'active': '' }}"> Contact </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Shop </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> <i class="fa-solid fa-bolt"></i> Flash Sale </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Resent view </a>

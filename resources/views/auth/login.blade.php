@@ -27,16 +27,20 @@
                         <div class="text-slate-500 xl:hidden text-center">
                             A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place
                         </div>
-                        @if (session('status'))
-                            <div class="mb-4 font-medium text-sm text-green-600">
-                                {{ session('status') }}
+                        @if ($errors->any())
+                            <div class="mb-4 font-medium text-sm text-red-600">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
                         <div class="mt-8">
                             <form method="POST" action="{{ route('login') }}" class="login-form text-center">
                                 @csrf 
-                                <input type="text" id="email" class="py-3 px-4 w-96" type="email" name="email" :value="old('email')"  autofocus placeholder="example@gmil.com"> 
-                                <input type="text" class="py-3 px-4 mt-4 w-96" id="password" type="password" name="password"  autocomplete="current-password" placeholder="**********">
+                                <input type="text" id="auth" class="py-3 px-4 w-96" type="text" name="auth" :value="old('auth')"  autofocus placeholder="Email/Username/Phone Number"> 
+                                <input type="password" class="py-3 px-4 mt-4 w-96" id="password" type="password" name="password"  autocomplete="current-password" placeholder="**********">
                                 <div class="w-96 flex justify-between mx-auto mt-5 text-slate-500">
                                     <div class="form-group">
                                         <input type="checkbox" id="remember_me" name="remember"  class="bg-blue-800 text-white xl:bg-white text-blue-800">

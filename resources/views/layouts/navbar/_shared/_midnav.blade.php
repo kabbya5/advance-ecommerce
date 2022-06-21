@@ -16,7 +16,7 @@
         </form>
     </div>
     <div class="col-span-1 self-center hidden lg:block cart-toggler ">
-        <a href="{{ route('cart.checkout') }}" class="text-white ml-4 relative">
+        <a href="{{ route('cart') }}" class="text-white ml-4 relative">
             <i class="fa-solid fa-shopping-cart fa-2x "></i> 
             <span class="text-whit bg-amber-800 px-2 rounded-md absolute -top-7 -right-4 z-20"> {{ Cart::count()}} </span>
             @if ( Cart::count() > 0)
@@ -26,39 +26,34 @@
                         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8 shadow border-b border-gray-200 sm:rounded-lg">
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="border-b text-left my-5">
-                                    <tr>
-                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Image
-                                        </th>    
-                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Name
-                                        </th>                             
-                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Quantity
-                                        </th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y-8 divide-gray-200">
-                                    @foreach (Cart::content() as $cart)
-                                        
-                                        <tr class="border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                <div>                                                        
-                                                    <img src="{{ asset($cart->options->image) }}" alt="{{ $cart->name }}" class="-ml-2 w-10 h-10 rounded-full">
-                                                </div>
-                                            </td> 
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                {{$cart->name}}
-                                            </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                {{$cart->qty}}
-                                            </td>
+                                    <thead class="border-b text-left my-5">
+                                        <tr>
+                                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                Image
+                                            </th>    
+                                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                Name
+                                            </th>                             
+                                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                Quantity
+                                            </th>   
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y-8 divide-gray-200">
+                                        @foreach (Cart::content() as $cart)
                                             
-                                            
-                                    @endforeach  
-                                </tbody>
+                                            <tr class="border-b">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                    <div>                                                        
+                                                        <img src="{{ asset($cart->options->image) }}" alt="{{ $cart->name }}" class="-ml-2 w-10 h-10 rounded-full">
+                                                    </div>
+                                                </td> 
+                                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                    {{$cart->name}}
+                                                </td>   
+                                            </tr>                              
+                                        @endforeach  
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
