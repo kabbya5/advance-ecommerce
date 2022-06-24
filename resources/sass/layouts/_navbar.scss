@@ -1,10 +1,9 @@
 .navbar{
     .active { 
         background-color:rgb(133 77 14);
-        transition: all 0.3s;  
-        button{
-            color: white;
-        }    
+        padding:5px 10px;
+        border-radius: 10px;
+        transition: all 0.3s;     
     }
     .dropdown-toggle:hover .dropdown-menu{
         display: grid;

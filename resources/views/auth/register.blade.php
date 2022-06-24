@@ -4,9 +4,13 @@
         <div class="h-screen  flex py-5 xl:py-0 my-10">
             <div class="my-auto mx-auto  bg-white px-5 sm:px-8 py-8 rounded-md shadow-md xl:shadow-none  sm:w-3/4 lg:w-2/4">
                 <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-center"> Sign Up </h2>
-                @if (session('status'))
-                    <div class="mb-4 font-medium text-sm text-green-600">
-                        {{ session('status') }}
+                @if ($errors->any())
+                    <div class="mb-4 font-medium text-sm text-red-600">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
                 <div class="mt-8 mx-auto w-96">
@@ -15,12 +19,21 @@
             
                         <div>
                             <x-jet-label for="name" value="{{ __('Name') }}" />
-                            <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                            <x-jet-input id="name" class="block mt-1 w-full @error('name') border border-red-500 @enderror" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                        </div>
+                        <div class="mt-4">
+                            <x-jet-label for="username" value="{{ __('User Name') }}" />
+                            <x-jet-input id="username" class="block mt-1 w-full  @error('username') border border-red-500 @enderror" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
                         </div>
             
                         <div class="mt-4">
                             <x-jet-label for="email" value="{{ __('Email') }}" />
-                            <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                            <x-jet-input id="email" class="block mt-1 w-full  @error('email') border border-red-500 @enderror" type="email" name="email" :value="old('email')" required />
+                        </div>
+
+                        <div class="mt-4">
+                            <x-jet-label for="phone" value="{{ __('Phone Number') }}" />
+                            <x-jet-input id="phone" class="block mt-1 w-full  @error('phone') border border-red-500 @enderror" type="text" name="phone" :value="old('phone')" required />
                         </div>
             
                         <div class="mt-4">

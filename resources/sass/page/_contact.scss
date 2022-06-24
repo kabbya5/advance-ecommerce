@@ -1,0 +1,12 @@
+.contact{
+    .icon{
+        width: 80px;
+        height: 80px;
+        border-radius:50%;
+        border:1px solid $color-blue;
+    }
+    input,textarea{
+        border:0;
+        border-bottom: 1px solid $color-blue;
+    }
+}
