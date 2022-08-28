@@ -34,10 +34,10 @@
     <div class="flex flex-col text-left my-5 transition duration-300" id="menu-list">
         <div class="border border-slate-200 text-center py-2"> Menu</div>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Home </a>
-        <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Contact </a>
+        <a href="{{ route('contacts.create') }}" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Contact </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Shop </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> <i class="fa-solid fa-bolt"></i> Flash Sale </a>
-        <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Resent view </a>
+        <a href="{{route('all.resent.view',Auth::user()->username)}}" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Resent view </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Orders </a>
     </div>
    

@@ -142,61 +142,6 @@
             </svg>
         </label>
     </header>
-    <!-- SIDEBAR NAVIGATEION  -->
-    <aside id="sidebar" class="z-50 bg-blue-800 h-screen mt-4 text-gray-100 md:w-24 xl:w-64 w-3/4 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-300 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
-        <div class="flex justify-center">
-            <ul class="list w-screen">
-                <li class="items mb-6">
-                    <a href="{{ route('dashboard') }}" class="nav-link flex items-center">   
-                        <i class="fas fa-user-shield"></i>
-                        <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Dashboard </span>
-                    </a>
-                </li>
-                <div class="bg-blue-700 h-px w-100 heih">
-                </div>
-                <li class="items">
-                    <a href="#" class=" active nav-link flex items-center transition duration-300 hover:bg-blue-700">   
-                        <i class="fas fa-home "></i>
-                        <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Dashboard </span>
-                    </a>
-                </li>
-                <li class="items">
-                    <a href="#" class="nav-link flex items-center transition duration-300 hover:bg-blue-700">   
-                        <i class="fas fa-home "></i>
-                        <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Dashboard </span>
-                    </a>
-                </li>
-
-                <!-- DROPDOWN NAV  -->
-                <li class="items dropdown">
-                    <a href="#" class="nav-link nav-link flex items-center justify-between transition duration-300 hover:bg-blue-700"> 
-                        <div class="link-item flex items-center">
-                            <i class="fas fa-home "></i>
-                            <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Dashboard </span>
-                        </div>  
-                        <span> &darr; </span>
-                    </a>  
-                    <ul class="dropdown-list list md:hidden transition duration-300">
-                        <li class="items">
-                            <a  class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700">   
-                                <i class="fas fa-home transition duration-300"></i>
-                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Dashboard </span>
-                            </a>
-                        </li>
-                        <li class="items">
-                            <a href="#" class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700">   
-                                <i class="fas fa-home transition duration-300"></i>
-                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Dashboard </span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- END DROPDOWN    -->
-            </ul>
-            
-        </div>   
-    </aside>
-    <!-- END SIDEBAR NAVIGATION  -->
     <main id="content" class="flex-1 p-3 bg-slate-100 rounded-xl shadow-xl">
         <div class="mx-auto">
         <!-- Top nav  -->

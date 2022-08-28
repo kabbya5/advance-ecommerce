@@ -11,6 +11,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Wishlist;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\ResentView;
 
 class User extends Authenticatable
 {
@@ -25,10 +27,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded= [
     ];
 
     /**
@@ -66,5 +65,13 @@ class User extends Authenticatable
     }
     public function products(){
         return $this->hasMany(Product::class,'seller_id');
+    }
+
+    public function order(){
+        return $this->hasOne(Order::class);
+    }
+
+    public function resentViews(){
+        return $this->hasMany(ResentView::class);
     }
 }

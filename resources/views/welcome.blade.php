@@ -3,7 +3,7 @@
     {{-- Start Navbar  --}}
         @include('layouts.navbar.navbar')
     {{-- End Navbar  --}}
-    <main class="bg-slate-200/60 xl:pl-0 xl:w-5/6 mx-auto">
+    <main class="bg-slate-100/60  p-4 xl:p-0 xl:w-5/6 mx-auto">
         <section class="bg-slate-200/60 relative"> 
             <div class="grid grid-cols-5">
                 {{-- SIDEBAR  --}}
@@ -45,7 +45,7 @@
         </section>
 
         {{-- start tag  --}}
-        <section class="tags mt-3 pt-3 lg:pt-3 lg:mt-8"> 
+        <section class="tags mt-3 pt-3 md:my-8"> 
             <h2 class="text-center py-4 font-bold text-slate-800 text-3xl md:mb-6 lg:text-left lg:pl-4"> Trending Tags </h2>
             <div class="grid grid-cols-3 lg:gap-3 xl:grid-cols-5">
                 @foreach ($tags as $tag)   
@@ -60,7 +60,94 @@
         </section>
         {{-- end tag  --}}
 
-        <section class="flash-deals mt-5 lg:mt-8">
+        {{-- Free Shipping  --}}
+        <section class="flash-deals pt-5 md:my-8 bg-white border">
+            <div class="flex justify-between  px-3">
+                <div class="flex flex-col ml-5 md:flex-row md:product->imagess-center">
+                    <h4 class="font-bold text-slate-200 text-xl bg-green-600 px-4 py-2 rounded-md"> Free Shipping Product </h4>              
+                </div>
+                <a href="{{ route('free.shipping.products') }}" class="text-white bg-amber-800 px-3 py-2 rounded-md"> View All </a>
+            </div>
+
+            <div class="my-5 lg:my-8 pt-3 lg:pt-5">
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+                    @foreach ($free_shipping_products as $product)
+                    <div class="col-span-1"> 
+                       
+                        <div class="product relative bg-white border drop-shadow-2xl pb-2">
+                            <div class="product__lable">
+                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white text-xs capitalize
+                                    {{ $product->discount_price == NULL ? 'bg-black':' ' }}
+                                    "> 
+                                    {{ $product->discount_status }} 
+                                </span>
+                                @if ($product->product_status)
+                                    <span class="absolute top-0 right-0 py-1 px-2 
+                                        bg-black text-white text-xs capitalize 
+                                        {{ $product->product_status }}
+                                        ">
+
+                                        {{ $product->product_status }}
+                                    </span>
+                                @endif
+                                
+                            </div>
+                            <a href="{{ route('product.show',$product->slug) }}"> 
+                                <div class="product_img pt-2 mb-2">
+                                    <img src="{{asset($product->image->img_path)}}" alt="{{$product->image->name }}">        
+                                </div>
+                            </a> 
+                            <a href="{{ route('product.show',$product->slug) }}"> 
+                                <div class="product_details ml-1">
+                                    <h4 class="text-slate-800 font-bold text-sm">
+                                        {{$product->product_name}}
+                                    </h4>
+                                    <p class="text-slate-500 text-xs"> {{ str_limit($product->short_text,60) }}</p>
+                                    <p class="text-slate-500 text-sm mt-1"> 
+                                        @if ($product->discount_price == NULL)
+                                            <span class="text-yellow-900 text-2xl"> {{ $product->selling_price }} TK </span> 
+                                        @else
+                                        <span class="text-yellow-900 text-2xl"> {{ $product->discount_price }} TK </span>
+                                            <span class="line-through ml-2"> {{ $product->selling_price }} Tk </span>
+                                        @endif
+                                    </p>
+                                </div>
+                            </a> 
+                            <div class="action mt-2 w-full flex">
+                                <div class="w-1/3  h-8 flex py-2 justify-center bg-green-800 text-white">
+                                    <button class="w-full add-cart"
+                                        data-id="{{ $product->id }}"> 
+                                        <i class="fa-solid fa-cart-shopping"></i> 
+                                    </button>
+                                </div>
+                                <div class="w-1/3 h-8 flex py-2 justify-center bg-red-800 text-white">
+                                    <button class="add-wishlist"
+                                        data-id="{{ $product->id }}"> 
+                                        <i class="fa-solid fa-heart"></i> 
+                                    </button>
+                                </div>
+                                <div class="w-1/3  h-8 flex py-2 justify-center bg-blue-800 text-white">
+                                    <form action="">
+                                        @csrf
+                                        <button type="submit">
+                                            <i class="fa-solid fa-cart-shopping"></i> 
+                                        </button>
+                                    </form>
+                                    
+                                </div>  
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        {{-- Free shippin End --}}
+
+        <section class="flash-deals pt-5 md:my-8 bg-white border">
             <div class="flex justify-between  px-3">
                 <div class="flex flex-col ml-5 md:flex-row md:product->imagess-center">
                     <h4 class="font-bold text-slate-800 text-xl "> Top Flash Deals </h4>
@@ -145,223 +232,29 @@
                         
                     </div>
                     @endforeach
-                    
+                </div>
+            </div>
+        </section>
+
+        {{-- Resent View  --}}
+        <section class="flash-deals pt-5 md:my-8 bg-white border">
+            <div class="flex justify-between  px-3">
+                <div class="flex flex-col ml-5 md:flex-row md:product->imagess-center">
+                    <h4 class="font-bold text-slate-800 text-xl "> Your Resent View </h4>              
+                </div>
+                <a href="{{ route('all.resent.view',Auth::user()->username) }}"> View All </a>
+            </div>
+
+            <div class="my-5 lg:my-4 pt-3 lg:pt-5">
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+                    @foreach ($resent_view_products as $resent_view)
                     <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-5">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-sm">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-sm"> Handpicked For Home Handpicked For Home Handpicked</p>
-                                <p class="text-slate-500 text-sm mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
+                        @include('shere._product',[
+                            "product" => $resent_view->product
+                        ])                    
+                        
                     </div>
-                    <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-5">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-md">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-sm"> Handpicked For Home Handpicked For Home Handpicked</p>
-                                <p class="text-slate-500 text-sm mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-5">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-md">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-sm"> Handpicked For Home Handpicked For Home Handpicked</p>
-                                <p class="text-slate-500 text-sm mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-5">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-md">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-sm"> Handpicked For Home Handpicked For Home Handpicked</p>
-                                <p class="text-slate-500 text-sm mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-5">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-md">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-sm"> Handpicked For Home Handpicked For Home Handpicked</p>
-                                <p class="text-slate-500 text-sm mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-5">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-md">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-sm"> Handpicked For Home Handpicked For Home Handpicked</p>
-                                <p class="text-slate-500 text-sm mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-5">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-md">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-xs"> {{ Str::length('Handpicked For Home Handpicked For Home Handpicked') }}</p>
-                                <p class="text-slate-500 text-sm mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1"> 
-                        <div class="product relative bg-white border drop-shadow-2xl pb-2">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white"> -30% </span>
-                                <span class="absolute top-0 right-0 py-1 px-2 bg-black text-white"> Free Shipping </span>
-                            </div>
-                            <div class="product_img pt-3">
-                                <img src="https://media.istockphoto.com/photos/blue-chino-pants-with-brown-leather-belt-isolated-on-white-background-picture-id1149139165?k=20&m=1149139165&s=612x612&w=0&h=GZNt8WgiJ3tSbVmcAKbIUmFAzbulMTw1NJ7msG2Tyno=" alt="">
-                            </div>
-                            
-                            <div class="product_details ml-3">
-                                <h4 class="text-slate-800 font-bold text-md">
-                                    Handpicked For Home
-                                </h4>
-                                <p class="text-slate-500 text-sm"> Handpicked For Home Handpicked </p>
-                                <p class="text-slate-500 text-xs mt-2"> 
-                                    <span class="text-yellow-900 text-2xl"> 300 Tk </span>
-                                    <span class="line-through ml-2"> 400 Tk </span>
-                                </p>
-                            </div>
-                            <div class="action mt-4 w-full flex text-center">
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-green-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-blue-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                                <a href="" class="w-1/3 px-2 py-2  text-white bg-red-800 flex justify-center"> <i class="fa-solid fa-cart-shopping"></i> </a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

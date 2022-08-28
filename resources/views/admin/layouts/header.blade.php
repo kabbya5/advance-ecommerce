@@ -6,7 +6,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
         
@@ -64,6 +63,14 @@
                 <div class="bg-blue-700 h-px w-100 heih">
 
                 </div>
+                 {{-- START BRAND  --}}
+                 <li class="items">
+                    <a href="{{ route('admin.orders') }}" class="{{ (request()->segment(2) == 'orders') ? 'active' : ' ' }} nav-link flex items-center transition duration-300 hover:bg-blue-700" title="Orders">   
+                        <i class="fa-brands fa-first-order"></i>
+                        <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Orders </span>
+                    </a>
+                </li>
+                {{-- END BRAND  --}}
                 <!-- DROPDOWN NAV  CATEGORY -->
                 <li class="items dropdown">
                     <a href="{{ route('categories.index') }}" class="{{ (request()->segment(2) == 'categories') ? 'active' : '' }} 
@@ -161,7 +168,7 @@
                     </a>
                 </li>
                 {{-- END BRAND  --}}
-                {{-- START BRAND  --}}
+                {{-- START COUPON  --}}
                 <li class="items">
                     <a href="{{ route('coupons.index') }}" class="{{ (request()->segment(2) == 'coupons') ? 'active' : ''}}
                         nav-link flex items-center transition 
@@ -171,7 +178,7 @@
                         <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Coupon </span>
                     </a>
                 </li>
-                {{-- END BRAND  --}}
+                {{-- END COUPON  --}}
 
                 {{-- SLIDER --}}
                 
@@ -212,11 +219,11 @@
 
                 {{-- END PRODUCT IMAGE  --}}
 
-                <!-- DROPDOWN Product -->
+                <!-- DROPDOWN PRODUCT -->
                 <li class="items dropdown">
                     <a href="{{ route('products.index') }}" class="{{ (request()->segment(2) == 'products') ? 'active' : '' }} 
                         nav-link nav-link flex items-center justify-between transition duration-300 hover:bg-blue-700"
-                        title="Child Category"> 
+                        title="product"> 
                         <div class="link-item flex items-center">
                             <i class="fa-brands fa-product-hunt"></i>
                             <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Product </span>
@@ -244,26 +251,62 @@
                         </li>
                     </ul>
                 </li>
-                <!-- END DROPDOWN    -->
+                <!-- END PRODUCT   -->
                 
-
-                
-               
-
-                <!-- DROPDOWN NAV  -->
+                <!-- START SITE SETTING  -->
                 <li class="items dropdown">
-                    <a href="#" class="nav-link nav-link flex items-center justify-between transition duration-300 hover:bg-blue-700"> 
+                    <a href="#" class="nav-link nav-link flex items-center justify-between transition duration-300 hover:bg-blue-700
+                       {{ request()->segment(2) == "setting" ? 'active':'' }} 
+                    "title="site-setting"> 
                         <div class="link-item flex items-center">
-                            <i class="fas fa-home "></i>
-                            <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Dashboard </span>
+                            <i class="fa-solid fa-gear transition duration-300"></i>
+                            <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Site Setting </span>
                         </div>  
                         <span> &darr; </span>
                     </a>  
                     <ul class="dropdown-list list md:hidden transition duration-300">
                         <li class="items">
-                            <a  class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700">   
-                                <i class="fas fa-home transition duration-300"></i>
-                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Dashboard </span>
+                            <a href="{{ route('delivery_charge.index') }}" class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700" title="delivery-charge">   
+                                <i class="fa-solid fa-file-invoice-dollar transition duration-300"></i>
+                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Delivery Charge  </span>
+                            </a>
+                        </li>
+                        <li class="items">
+                            <a href="{{ route('site.setting') }}" class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700" title="site setting">   
+                                <i class="fa-solid fa-address-card transition duration-300"></i>
+                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Site Setting  </span>
+                            </a>
+                        </li>
+                        <li class="items">
+                            <a href="{{ route('terms.and.conditons') }}" class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700" title="trems and condition">   
+                                <i class="fa-solid fa-disease transition duration-300"></i>
+                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Terms And Condition  </span>
+                            </a>
+                        </li>
+                        <li class="items">
+                            <a href="{{ route('payment.create') }}" class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700" title="trems and condition">   
+                                <i class="fa-solid fa-cash-register transition duration-300"></i>
+                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Payment System </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- END SITE SETTING   -->
+
+                <!-- Other   -->
+                <li class="items dropdown">
+                    <a href="#" class="{{ (request()->segment(2) =='others') ? 'active' : '' }} nav-link nav-link flex items-center justify-between transition duration-300 hover:bg-blue-700 " title="others"> 
+                        <div class="link-item flex items-center">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate"> Others </span>
+                        </div>  
+                        <span> &darr; </span>
+                    </a>  
+                    <ul class="dropdown-list list md:hidden transition duration-300">
+                        <li class="items">
+                            <a href="{{ route('users.index') }}" class="nav-link nav-link nav-link flex items-center  transition duration-300 hover:bg-blue-700" title="users">   
+                                <i class="fa-solid fa-user transition duration-300"></i>
+                                <span class="md:hidden xl:block text-2xl font-extrabold whitespace-nowrap truncate transition duration-300"> Users </span>
                             </a>
                         </li>
                         <li class="items">
@@ -274,7 +317,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- END DROPDOWN    -->
+                <!-- Other    -->
             </ul>
             
         </div>   

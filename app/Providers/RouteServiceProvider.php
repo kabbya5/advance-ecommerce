@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Order;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -39,8 +40,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         Route::bind('slug',function($slug){
-            $product = Product::where('slug',$slug)->first();
-            return $product ? $product : abort(404);
+            return $product = Product::where('slug',$slug)->first();
+            $product ? $product : abort(404);
         });
 
         $this->routes(function () {

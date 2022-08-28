@@ -94,3 +94,34 @@
 
 
 /* END SIDE BAR  */
+
+// Top search Input 
+/* SEARCH INPUT  */
+#content .form-group .input{
+    top:-20px;
+    font-size: 15px;
+    font-family: inherit;
+    padding:8px 20px;
+    border-radius: 20px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    width:100%;
+    display: block;
+}
+#content .form-group .input:focus{
+    outline: none;
+    box-shadow: 0 10px 20px rgba(black ,.3);
+    border-bottom: 3px solid #1e40af;
+}
+#content .form-group .input:focus:invalid{
+    border-bottom: 3px solid red;
+}
+
+#content .form-group .input::-webkit-input-placeholder{
+    color: #999;
+}
+#content .form-group .btn{
+    top:20%;
+    right: 5%;
+    transform: translateY(-50%);
+}

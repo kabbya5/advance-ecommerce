@@ -13,6 +13,8 @@ use App\Models\Childcategory;
 use App\Models\Brand;
 use App\Models\Wishlist;
 use DB;
+use App\Models\OrderDetail;
+use App\Models\ResentView;
 use Carbon\Carbon;
 
 class Product extends Model
@@ -103,6 +105,14 @@ class Product extends Model
     public function getColorsAttribute(){
         $colors = $this->color;
         return explode(',',$colors);
-
     }
+
+    public function order_detail(){
+        return $this->hasOne(OrderDetail::class);
+    }
+
+    public function resentView(){
+        return $this->hasOne(ResentView::class);
+    }
+
 }

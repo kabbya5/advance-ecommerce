@@ -47,9 +47,9 @@
         @endif
 
         <!-- Page Content -->
-        {{-- <main>
-            {{ $slot }}
-        </main> --}}
+
+        @include('layouts.footer')
+       
     </div>
 
     @stack('modals')

@@ -1,0 +1,15 @@
+#report .shoping-report::before{
+    position:absolute;
+    content: ' ';
+    width:80%;
+    height:12px;
+    bottom:-15px;
+    left: 50%;
+    background-color: #fffdfd;
+    z-index: 1;
+    transform: translateX(-50%);
+}
+#report .shoping-report:hover{
+    transform: scale(1.03);
+    box-shadow: 10px 4px 20px rgba(31, 41, 55, 0.3);
+}
