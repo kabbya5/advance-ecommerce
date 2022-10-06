@@ -9,6 +9,8 @@ use Cart;
 use Session;
 use App\Models\Coupon;
 use App\Models\DeliveryCharge;
+use phpDocumentor\Reflection\Types\This;
+
 class CartController extends Controller
 {
     public function addCart($id){
@@ -42,6 +44,45 @@ class CartController extends Controller
         Cart::add($cart);
         
         return response()->json(['success' =>'Successfully Add Cart']);    
+    }
+
+    public function addToCard(Request $request,Product $product){
+        $option = $request->all();
+        $cart = $this->addCartManagement($product,$option);
+
+        Cart::add($cart);
+
+        return back()->with('message',"Successfully Product Added");
+    }
+
+    public function addCartManagement($product, $option){
+
+        // get product first image 
+        $product_id = DB::table('product_images')->where('product_id', $product->id)->first();
+        $image_id = $product_id->image_id;
+        $image = DB::table('images')->where('id' ,$image_id)->first();
+
+        $cart = [];
+        $cart['id']  = $product->id;
+        $cart['name'] = $product->product_name;
+        $cart['weight'] = 1;
+        $cart['options']['image'] = $image->img_path;
+        $cart['qty'] = $option['qty'];
+        $cart['options']['seller_id'] = $product->seller_id;
+        $cart['options']['color'] = $option['color'];
+        $cart['options']['size'] = $option['size'];
+
+        if($product->free_shipping == 1){
+            $cart['options']['free_shipping'] = 'free-shipping';
+        }
+
+        if($product->discount_price){
+            $cart['price'] = $product->discount_price;
+        }else{
+            $cart['price'] = $product->selling_price;
+        }
+        return $cart;
+
     }
 
     public function cart(){    

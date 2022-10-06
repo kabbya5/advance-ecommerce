@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Shiping;
+use App\Models\Shipping;
 use Cart;
 use Session;
 use Auth;
@@ -13,14 +13,15 @@ use App\Models\Order;
 use App\Mail\OrderMail;
 use App\Mail\AdminOrder;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Models\SiteSetting;
 
 class OrderController extends Controller
 {
     public function cartCheckout(){
-        $shipping = Shiping::where('user_id', Auth::id())->first();
+        $shipping = Shipping::where('user_id', Auth::id())->first();
         if($shipping == null){
-            $shipping = new Shiping();
+            $shipping = new Shipping();
         }
         $carts = Cart::content();     
         
@@ -55,6 +56,7 @@ class OrderController extends Controller
 
         // insert order 
         $order_code = 'MDBD'. rand();
+        
         $input = [
             'user_id' => Auth::id(),
             'order_code' => $order_code,
@@ -75,19 +77,20 @@ class OrderController extends Controller
 
         //insert shipping 
 
-        $shipping = Shiping::where('user_id', Auth::id())->first();
+        $shipping = Shipping::where('user_id', Auth::id())->first();
 
         $data = $request->except(['agree','payment']);
         $data['user_id'] = Auth::id();
         $data['order_id'] = $order_id;
 
        
-        Shiping::create($data);
+        Shipping::create($data);
       
         
 
         // insert order details
         $cart = Cart::content();
+
         foreach ($cart as $row) {
             $details = array(
                 'order_id' => $order_id,
@@ -103,6 +106,12 @@ class OrderController extends Controller
             OrderDetail::create($details); 
         }
 
+        foreach($cart as $row){
+            $product = Product::find($row->id);
+            $product->increment('top_rated');
+
+        }
+
 
         $this->sendOrderConfirmationMail($input,$data,$cart);
         $this->sendAdminOrderConfirmationMail($input,$data,$cart);
@@ -114,9 +123,8 @@ class OrderController extends Controller
         Mail::to($data['email'])->send(new OrderMail($input,$data,$cart));
         Cart::destroy();
 
-       
-
     }
+    
     public function sendAdminOrderConfirmationMail($input,$data,$cart){
         $email_address = SiteSetting::first()->site_email;
         

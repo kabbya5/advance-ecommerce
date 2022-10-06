@@ -82,9 +82,8 @@ class Product extends Model
     }
     public function getProductStatusAttribute (){
         $top_rated = DB::table('products')->where('id',$this->id)
-                        ->whereNotNull('top_rated')->whereBetween('updated_at',[
-                            Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()
-                    ])->get();
+                        ->whereNotNull('top_rated')->orderBy('views','desc')
+                    ->get();
         if($this->upcomming == 1 && $this->product_quantity == null){
             return "upcomming";
         
@@ -114,5 +113,4 @@ class Product extends Model
     public function resentView(){
         return $this->hasOne(ResentView::class);
     }
-
 }

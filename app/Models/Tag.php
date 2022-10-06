@@ -15,4 +15,9 @@ class Tag extends Model
     public function products(){
         return $this->morphToMany(Product::class,'productable');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

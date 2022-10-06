@@ -37,48 +37,33 @@
         <a href="{{ route('contacts.create') }}" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Contact </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Shop </a>
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> <i class="fa-solid fa-bolt"></i> Flash Sale </a>
+        @auth
         <a href="{{route('all.resent.view',Auth::user()->username)}}" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Resent view </a>
+        @endauth
         <a href="" class="text-amber-600 py-1 pl-4 border border-slate-200 transition duration-300/60 hover:text-amber-800"> Orders </a>
     </div>
    
     <div class="flex flex-col text-left my-5 transition duration-300 " id="category-list">
         <div class="border border-slate-200 text-center py-2"> Category </div> 
         <ul class="w-full">
-            <li class="border border-slate-200 py-1 pl-4 dropdown-toggle">
-                <a href="" class="text-amber-600 transition duration-300 hover:text-amber-800"> Home <i class="fa-solid fa-angle-down float-right mr-4"></i> </a>
-                <div class="hidden transition duration-300 grid grid-cols-2 gap-3 mt-2 ml-3 dropdown-menu">
-                    <div class="col-span-1 transition duration-300">
-                        <a href="" class="text-gray-900  transition duration-300 hover:text-amber-800"> P Category </a> 
-                        <div class="flex flex-col ml-3 mt-2 transition duration-300">
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
+            @foreach ($categories as $category)
+                <li class="border border-slate-200 py-1 pl-4 dropdown-toggle">
+                    <a href="{{ route('category.products',$category->slug) }}" class="text-amber-600 transition duration-300 hover:text-amber-800"> {{ $category->cat_name }} <i class="fa-solid fa-angle-down float-right mr-4"></i> </a>
+                    <div class="hidden transition duration-300 grid grid-cols-2 gap-3 mt-2 ml-3 dropdown-menu">
+                        <div class="col-span-1 transition duration-300">
+                            @foreach ($category->subcategories as $subcat)
+                                <a href="" class="text-gray-900  transition duration-300 hover:text-amber-800"> {{ $subcat->subcat_name }} </a> <br>
+                                
+                                <div class="flex flex-col ml-3 mt-2 transition duration-300">
+                                    @foreach ($subcat->childcategories as $childcat)
+                                    <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> {{ $childcat->childcat_name }}</a>
+                                    @endforeach
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="col-span-1">
-                        <a href="" class="text-gray-900  transition duration-300 hover:text-amber-800"> P Category </a> 
-                        <div class="flex flex-col ml-3 mt-2">
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
-                            <a href="" class="text-gray-600  transition duration-300 hover:text-amber-800"> c category </a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="border border-slate-200 py-1 pl-4"> 
-                <a href="" class="text-amber-600  transition duration-300 hover:text-amber-600"> Home <i class="fa-solid fa-angle-down float-right"></i> </a>
-            </li>
-            <li class="border border-slate-200 py-1 pl-4"> 
-                <a href="" class="text-amber-600  transition duration-300 hover:text-amber-600"> Home <i class="fa-solid fa-angle-down float-right"></i> </a>
-            </li>
-            <li class="border border-slate-200 py-1 pl-4"> 
-                <a href="" class="text-amber-600  transition duration-300 hover:text-amber-600"> Home <i class="fa-solid fa-angle-down float-right"></i> </a>
-            </li>
-            <li class="border border-slate-200 py-1 pl-4"> 
-                <a href="" class="text-amber-600  transition duration-300 hover:text-amber-600"> Home <i class="fa-solid fa-angle-down float-right"></i> </a>
-            </li>   
+                </li>
+            @endforeach 
         </ul>
     </div>
 </div>

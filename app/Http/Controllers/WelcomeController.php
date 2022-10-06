@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Tag;
 use App\Models\product;
 use DB;
@@ -15,12 +16,13 @@ use App\Models\ResentView;
 class WelcomeController extends Controller
 {
     public function welcome(){
-        $sliders = Slider::where('status',1)->orderBy('id','DESC')->get();
-        $brands = Brand::latest()->get();
-        $tags = Tag::take(20)->get();
-        $products = Product::all(); 
-        $resent_view_products = ResentView::where('user_id',Auth::id())->orderBy('created_at','desc')->limit(15)->get();
-        $free_shipping_products = Product::where('free_shipping',1)->latest()->take(20)->get();
+        $sliders = Slider::where('status',1)->get();
+        $brands = Brand::latest()->take(6)->get();
+        $tags = Tag::take(6)->get();
+        $products = Product::take(12)->get(); 
+        $resent_view_products = ResentView::where('user_id',Auth::id())->orderBy('created_at','desc')->limit(9)->get();
+        $free_shipping_products = Product::where('free_shipping',1)->latest()->take(8)->get();
+
         return view ('welcome',compact(
             'sliders',
             'brands',
@@ -39,6 +41,7 @@ class WelcomeController extends Controller
                 'user_id' =>$user_id,
                 'product_id' => $product->id,
             ];
+
             $check = ResentView::where('product_id',$product->id)->where('user_id',$user_id)->first();
            
             if($check){
@@ -46,9 +49,19 @@ class WelcomeController extends Controller
             }
             else{
                 $product->resentView()->create($array);  
-            }
-            
+            }   
         }
-        return view('pages.product_show',compact('product'));    
+        
+        $product->increment("views");
+        
+        $tags = $product->tags;
+        $tags_array = [];
+        foreach($tags as $key=>$tag){
+            $tag = rtrim($tag->tag_name,'.');
+            array_push($tags_array,$tag);
+        }
+        $tag = implode(", ",$tags_array); 
+
+        return view('pages.product_show',compact('product','tag'));    
     }
 }

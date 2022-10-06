@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products= Product::latest()->get();
+        $products= Product::all();
         return view ('admin.product.index',compact('products'));
     }
 

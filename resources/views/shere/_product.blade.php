@@ -17,11 +17,13 @@
         
     </div>
     <a href="{{ route('product.show',$product->slug) }}"> 
-        <div class="product_img pt-2 mb-2">
-            <img src="{{asset($product->image->img_path)}}" alt="{{$product->image->name }}">        
+        <div class="product__img pt-2 mb-2 w-full ">
+            <img class="block object-cover w-full h-[220px]"
+            src="{{asset($product->image->img_path)}}" alt="{{$product->image->name }}">        
         </div>
     </a> 
-    <a href="{{ route('product.show',$product->slug) }}"> 
+    <a href="{{ route('product.show',$product->slug) }}"
+        class="h-20"> 
         <div class="product_details ml-1">
             <h4 class="text-slate-800 font-bold text-sm">
                 {{$product->product_name}}
@@ -56,8 +58,7 @@
                 <button type="submit">
                     <i class="fa-solid fa-cart-shopping"></i> 
                 </button>
-            </form>
-            
+            </form>   
         </div>  
     </div>
 </div>

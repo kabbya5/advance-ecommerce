@@ -33,7 +33,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('update');
+        $this->authorize('create',Category::class);
         $request->validate([
             'cat_name' => 'required|unique:categories',
         ]);

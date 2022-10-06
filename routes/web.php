@@ -47,8 +47,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard',compact('orders'));
 })->name('dashboard');
 
-//User  
+//User 
+
 Route::get('/',[WelcomeController::class,'welcome'])->name('welcome.page');
+//shop page 
+Route::get('/free/shippin/products',[ShopController::class,'free_shipping_products'])->name('free.shipping.products');
+Route::get('/category/products/{category}',[ShopController::class,'categoryProducts'])->name('category.products');
+Route::get('/products/{tag}',[ShopController::class,'tagProducts'])->name('tag.products');
+
 Route::get('/product/{slug}',[WelcomeController::class,'product_show'])->name('product.show');
 
 Route::get('/{user}/resent_view_itmes',[ResentViewController::class,'user_all_resent_view'])->name('all.resent.view')->middleware('auth');
@@ -62,6 +68,8 @@ Route::get('/update/{color}/{id}',[CartController::class,'updateColor'])->name('
 Route::get('/updated/{size}/{id}',[CartController::class,'updateSize'])->name('update.size');
 Route::get('/update-qty/{qty}/{id}',[CartController::class,'updateQty'])->name('update.qty');
 Route::get('/product/card/destroy/{id}',[CartController::class,'cartDestroy'])->name('cart.destroy');
+Route::post('/add-card/{slug}',[CartController::class,'addTocard'])->name('add.to.cart');
+Route::post('/buy/{slug}',[CartController::class,'buyProduct'])->name('buy.product');
 
 // Apply Coupon
 Route::post('/apply/coupon',[CartController::class,"applyCoupon"])->name('apply.coupon');
@@ -76,7 +84,6 @@ Route::post('/comfirm/order',[OrderController::class,'confirmOrder'])->name('com
 
 Route::get('/check',[CartController::class,'check']);
 
-Route::get('/free/shippin/products',[ShopController::class,'free_shipping_products'])->name('free.shipping.products');
 
 // Admin 
 Route::group([

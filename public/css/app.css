@@ -10462,12 +10462,12 @@ select{
   margin-top: -2.5rem;
 }
 
-.mb-5{
-  margin-bottom: 1.25rem;
-}
-
 .mr-5{
   margin-right: 1.25rem;
+}
+
+.mb-5{
+  margin-bottom: 1.25rem;
 }
 
 .mb-10{
@@ -10606,6 +10606,14 @@ select{
   height: 6rem;
 }
 
+.h-\[220px\]{
+  height: 220px;
+}
+
+.h-\[350px\]{
+  height: 350px;
+}
+
 .min-h-screen{
   min-height: 100vh;
 }
@@ -10728,6 +10736,12 @@ select{
 
 .min-w-full{
   min-width: 100%;
+}
+
+.min-w-fit{
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
 }
 
 .max-w-screen-xl{
@@ -11808,11 +11822,6 @@ select{
   color: rgb(113 63 18 / var(--tw-text-opacity));
 }
 
-.text-slate-200{
-  --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
-}
-
 .text-gray-200{
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
@@ -12194,6 +12203,9 @@ select{
   transform: translateY(-50%);
 }
 
+.product_img img {
+  height: 240px;
+}
 .product__lable .top {
   background-color: #f97316;
   background-image: linear-gradient(-120deg, transparent 0%, transparent 50%, #365314 50%);
@@ -12346,6 +12358,11 @@ select{
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-green-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-blue-600:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
@@ -12391,11 +12408,6 @@ select{
   color: rgb(30 64 175 / var(--tw-text-opacity));
 }
 
-.hover\:text-amber-600:hover{
-  --tw-text-opacity: 1;
-  color: rgb(217 119 6 / var(--tw-text-opacity));
-}
-
 .hover\:text-white:hover{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -12404,6 +12416,11 @@ select{
 .hover\:text-slate-600:hover{
   --tw-text-opacity: 1;
   color: rgb(71 85 105 / var(--tw-text-opacity));
+}
+
+.hover\:text-amber-600:hover{
+  --tw-text-opacity: 1;
+  color: rgb(217 119 6 / var(--tw-text-opacity));
 }
 
 .hover\:text-amber-500:hover{
@@ -12895,9 +12912,6 @@ select{
   }
   .md\:border-l{
     border-left-width: 1px;
-  }
-  .md\:p-2{
-    padding: 0.5rem;
   }
   .md\:px-2{
     padding-left: 0.5rem;

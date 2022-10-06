@@ -15,13 +15,12 @@
                     <div class="owl-carousel owl-theme">
                         @foreach ($sliders as $slider)
                             <div class="item">
-                                <div class="hidden md:block">
+                                <div class="hidden md:block h-full">
                                     <img src="{{ asset($slider->img_1) }}" alt="{{ $slider->slug }}" class="h-full md:h-64 w-full hidden md:block">
                                 </div>
                                 <div class="md:hidden">
                                     <img src="{{ asset($slider->img_2) }}" alt="{{ $slider->slug }}" class="h-64  w-full md:hidden">
-                                </div>
-                                    
+                                </div>      
                             </div>
                         @endforeach
                     </div>
@@ -30,132 +29,11 @@
             </div>
         </section>
 
-        <section class="band mt-2 lg:mt-8">
-            <div class="grid grid-cols-12 gap-4 xl:grid-cols-9 ">
-                @foreach ($brands as $brand)
-                    <div class="col-span-4 md:col-span-3 lg:col-span-2 xl:col-span-1">
-                        @if ($brand->brand_img == NULL)
-                            <span class="text-slate-500 font-bold text-sm"> {{ $brand->name }}</span>
-                        @else
-                        <img src="{{ asset($brand->brand_img) }}" alt="{{ $brand->slug }}" class="w-full h-20">
-                        @endif     
-                    </div>
-                @endforeach
-            </div>
-        </section>
-
-        {{-- start tag  --}}
-        <section class="tags mt-3 pt-3 md:my-8"> 
-            <h2 class="text-center py-4 font-bold text-slate-800 text-3xl md:mb-6 lg:text-left lg:pl-4"> Trending Tags </h2>
-            <div class="grid grid-cols-3 lg:gap-3 xl:grid-cols-5">
-                @foreach ($tags as $tag)   
-                    <div class="col-span-1 bg-white border lg:border-slate-200/60 py-3 h-30 shadow-md transition duration-300 hover:border-yellow-800">
-                        <div class="flex flex-col md:flex-row justify-around items-center">
-                            <img src="{{ asset($tag->tag_img) }}" alt="{{ $tag->slug }}" class="w-full h-24 w-[60px] pb-4 md:pb-0">
-                            <h4 class="font-semibold text-slate-500 font-md"> {{ $tag->tag_name }} </h4>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </section>
-        {{-- end tag  --}}
-
-        {{-- Free Shipping  --}}
+        {{-- flash deal --}}
         <section class="flash-deals pt-5 md:my-8 bg-white border">
             <div class="flex justify-between  px-3">
                 <div class="flex flex-col ml-5 md:flex-row md:product->imagess-center">
-                    <h4 class="font-bold text-slate-200 text-xl bg-green-600 px-4 py-2 rounded-md"> Free Shipping Product </h4>              
-                </div>
-                <a href="{{ route('free.shipping.products') }}" class="text-white bg-amber-800 px-3 py-2 rounded-md"> View All </a>
-            </div>
-
-            <div class="my-5 lg:my-8 pt-3 lg:pt-5">
-                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
-                    @foreach ($free_shipping_products as $product)
-                    <div class="col-span-1"> 
-                       
-                        <div class="product relative bg-white border drop-shadow-2xl pb-2">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white text-xs capitalize
-                                    {{ $product->discount_price == NULL ? 'bg-black':' ' }}
-                                    "> 
-                                    {{ $product->discount_status }} 
-                                </span>
-                                @if ($product->product_status)
-                                    <span class="absolute top-0 right-0 py-1 px-2 
-                                        bg-black text-white text-xs capitalize 
-                                        {{ $product->product_status }}
-                                        ">
-
-                                        {{ $product->product_status }}
-                                    </span>
-                                @endif
-                                
-                            </div>
-                            <a href="{{ route('product.show',$product->slug) }}"> 
-                                <div class="product_img pt-2 mb-2">
-                                    <img src="{{asset($product->image->img_path)}}" alt="{{$product->image->name }}">        
-                                </div>
-                            </a> 
-                            <a href="{{ route('product.show',$product->slug) }}"> 
-                                <div class="product_details ml-1">
-                                    <h4 class="text-slate-800 font-bold text-sm">
-                                        {{$product->product_name}}
-                                    </h4>
-                                    <p class="text-slate-500 text-xs"> {{ str_limit($product->short_text,60) }}</p>
-                                    <p class="text-slate-500 text-sm mt-1"> 
-                                        @if ($product->discount_price == NULL)
-                                            <span class="text-yellow-900 text-2xl"> {{ $product->selling_price }} TK </span> 
-                                        @else
-                                        <span class="text-yellow-900 text-2xl"> {{ $product->discount_price }} TK </span>
-                                            <span class="line-through ml-2"> {{ $product->selling_price }} Tk </span>
-                                        @endif
-                                    </p>
-                                </div>
-                            </a> 
-                            <div class="action mt-2 w-full flex">
-                                <div class="w-1/3  h-8 flex py-2 justify-center bg-green-800 text-white">
-                                    <button class="w-full add-cart"
-                                        data-id="{{ $product->id }}"> 
-                                        <i class="fa-solid fa-cart-shopping"></i> 
-                                    </button>
-                                </div>
-                                <div class="w-1/3 h-8 flex py-2 justify-center bg-red-800 text-white">
-                                    <button class="add-wishlist"
-                                        data-id="{{ $product->id }}"> 
-                                        <i class="fa-solid fa-heart"></i> 
-                                    </button>
-                                </div>
-                                <div class="w-1/3  h-8 flex py-2 justify-center bg-blue-800 text-white">
-                                    <form action="">
-                                        @csrf
-                                        <button type="submit">
-                                            <i class="fa-solid fa-cart-shopping"></i> 
-                                        </button>
-                                    </form>
-                                    
-                                </div>  
-                            </div>
-                        </div>
-                        
-                        
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-
-        {{-- Free shippin End --}}
-
-        <section class="flash-deals pt-5 md:my-8 bg-white border">
-            <div class="flex justify-between  px-3">
-                <div class="flex flex-col ml-5 md:flex-row md:product->imagess-center">
-                    <h4 class="font-bold text-slate-800 text-xl "> Top Flash Deals </h4>
-                    <div class="w-96 py-2  px-4 text-center mt-8 md:mt-0 md:ml-5 bg-red-800 text-white">
-                        <span class="counter  text-md ">
-                            Deals end In: 
-                        </span>
-                    </div>                
+                    <h4 class="font-bold text-slate-800 text-xl "> Top Flash Deals </h4>              
                 </div>
                 <a href=""> View All </a>
             </div>
@@ -164,79 +42,80 @@
                 <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
                     @foreach ($products as $product)
                     <div class="col-span-1"> 
-                       
-                        <div class="product relative bg-white border drop-shadow-2xl pb-2">
-                            <div class="product__lable">
-                                <span class="absolute top-0 left-0 py-1 px-1 bg-red-800 text-white text-xs capitalize
-                                    {{ $product->discount_price == NULL ? 'bg-black':' ' }}
-                                    "> 
-                                    {{ $product->discount_status }} 
-                                </span>
-                                @if ($product->product_status)
-                                    <span class="absolute top-0 right-0 py-1 px-2 
-                                        bg-black text-white text-xs capitalize 
-                                        {{ $product->product_status }}
-                                        ">
-
-                                        {{ $product->product_status }}
-                                    </span>
-                                @endif
-                                
-                            </div>
-                            <a href="{{ route('product.show',$product->slug) }}"> 
-                                <div class="product_img pt-2 mb-2">
-                                    <img src="{{asset($product->image->img_path)}}" alt="{{$product->image->name }}">        
-                                </div>
-                            </a> 
-                            <a href="{{ route('product.show',$product->slug) }}"> 
-                                <div class="product_details ml-1">
-                                    <h4 class="text-slate-800 font-bold text-sm">
-                                        {{$product->product_name}}
-                                    </h4>
-                                    <p class="text-slate-500 text-xs"> {{ str_limit($product->short_text,60) }}</p>
-                                    <p class="text-slate-500 text-sm mt-1"> 
-                                        @if ($product->discount_price == NULL)
-                                            <span class="text-yellow-900 text-2xl"> {{ $product->selling_price }} TK </span> 
-                                        @else
-                                        <span class="text-yellow-900 text-2xl"> {{ $product->discount_price }} TK </span>
-                                            <span class="line-through ml-2"> {{ $product->selling_price }} Tk </span>
-                                        @endif
-                                    </p>
-                                </div>
-                            </a> 
-                            <div class="action mt-2 w-full flex">
-                                <div class="w-1/3  h-8 flex py-2 justify-center bg-green-800 text-white">
-                                    <button class="w-full add-cart"
-                                        data-id="{{ $product->id }}"> 
-                                        <i class="fa-solid fa-cart-shopping"></i> 
-                                    </button>
-                                </div>
-                                <div class="w-1/3 h-8 flex py-2 justify-center bg-red-800 text-white">
-                                    <button class="add-wishlist"
-                                        data-id="{{ $product->id }}"> 
-                                        <i class="fa-solid fa-heart"></i> 
-                                    </button>
-                                </div>
-                                <div class="w-1/3  h-8 flex py-2 justify-center bg-blue-800 text-white">
-                                    <form action="">
-                                        @csrf
-                                        <button type="submit">
-                                            <i class="fa-solid fa-cart-shopping"></i> 
-                                        </button>
-                                    </form>
-                                    
-                                </div>  
-                            </div>
-                        </div>
-                        
-                        
+                        @include('shere._product',[
+                            'product' => $product
+                        ])
                     </div>
                     @endforeach
                 </div>
             </div>
         </section>
 
+        {{-- end flash deal  --}}
+
+
+        {{-- start brand  --}}
+        <section class="tags mt-3 pt-3 md:my-8"> 
+            <h2 class="text-center py-4 font-bold text-slate-800 text-3xl md:mb-6 lg:text-left lg:pl-4"> Our Brand </h2>
+            <div class="grid grid-cols-3 lg:gap-3 xl:grid-cols-5">
+                @foreach ($brands as $brand) 
+                    <div class="col-span-1 bg-white border lg:border-slate-200/60 py-3 h-30 shadow-md transition duration-300 hover:border-yellow-800">
+                        <div class="flex flex-col md:flex-row justify-around items-center">
+                            <img src="{{ asset($brand->brand_img ) }}" alt="{{ $brand->slug  }}" class="w-full h-24 w-[60px] pb-4 md:pb-0">
+                            <h4 class="font-semibold text-slate-500 font-md"> {{ $brand->name  }} </h4>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+        {{-- end brand  --}}
+
+         {{-- Free Shipping  --}}
+
+         <section class="flash-deals pt-5 md:my-8 bg-white border">
+            <div class="flex justify-between  px-3">
+                <div class="flex flex-col ml-5 md:flex-row md:product->imagess-center">
+                    <h4 class="font-bold text-slate-800 text-xl ">Free Shipping Product </h4>              
+                </div>
+                <a href="{{ route('free.shipping.products') }}"> View All </a>
+            </div>
+            <div class="my-5 lg:my-8 pt-3 lg:pt-5">
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+                    @foreach ($free_shipping_products as $product)
+                    @include('shere._product',[
+                        "product" => $product
+                    ]) 
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        {{-- End Free Shippin  --}}
+
+        {{-- start tag  --}}
+        <section class="tags mt-3 pt-3 md:my-8"> 
+            <h2 class="text-center py-4 font-bold text-slate-800 text-3xl md:mb-6 lg:text-left lg:pl-4"> Trending Tags </h2>
+            <div class="grid grid-cols-3 lg:gap-3 xl:grid-cols-5">
+                @foreach ($tags as $tag)   
+                    <div class="col-span-1 bg-white border lg:border-slate-200/60 py-3 h-30 shadow-md transition duration-300 hover:border-yellow-800">
+                        <a href="{{ route('tag.products',$tag->slug) }}">
+                            <div class="flex flex-col md:flex-row justify-around items-center">
+                                <img src="{{ asset($tag->tag_img) }}" alt="{{ $tag->slug }}" class="w-full h-24 w-[60px] pb-4 md:pb-0">
+                                <h4 class="font-semibold text-slate-500 font-md"> {{ $tag->tag_name }} </h4>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+        {{-- end tag  --}}
+
+       
+
+    
+
         {{-- Resent View  --}}
+        @auth
         <section class="flash-deals pt-5 md:my-8 bg-white border">
             <div class="flex justify-between  px-3">
                 <div class="flex flex-col ml-5 md:flex-row md:product->imagess-center">
@@ -246,7 +125,7 @@
             </div>
 
             <div class="my-5 lg:my-4 pt-3 lg:pt-5">
-                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+                <div class="grid grid-cols-2 gap-4  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
                     @foreach ($resent_view_products as $resent_view)
                     <div class="col-span-1"> 
                         @include('shere._product',[
@@ -258,6 +137,8 @@
                 </div>
             </div>
         </section>
+        @endauth
+       
     </main>
     <section class="pl-4 xl:pl-0 xl:w-5/6 mx-auto relative">
         {{-- START SIDE BAR  --}}

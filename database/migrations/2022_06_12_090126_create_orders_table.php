@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('discount')->nullable();
             $table->string('subtotal');
             $table->integer('status');
+            $table->string('payment');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

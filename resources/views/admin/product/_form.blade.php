@@ -54,7 +54,8 @@
         <div class="form-group flex justify-between">
             <div class="form-group flex flex-col">
                 <label for="product_quantity" class="pb-2"> Product Quantity </label>
-                <input type="text" name="product_quantity" id="product_quantity" value="{{ old('product_quantity',$product->product_quantity)}}" placeholder="Product Quantity" class="mb-2 h-10 w-96 @error('product_quantity') border border-red-500 @enderror">
+                <input type="text" name="product_quantity" id="product_quantity" value="{{ old('product_quantity',$product->product_quantity)}}" placeholder="Product Quantity" 
+                class="mb-2 h-10 w-96 @error('product_quantity') border border-red-500 @enderror">
                 @error('product_quantity')
                     <p class="text-red-500"> {{ $message }}</p>
                 @enderror  

@@ -23,7 +23,7 @@ class WishlistController extends Controller
                     'user_id' => $userid, 
                 ]);
                 
-                return response()->jsone(['success' => 'Product Added On Wishlist']);
+                return response()->json(['success' =>'Successfully Add wishlist']);    
             }
             
         }else{

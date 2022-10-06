@@ -1,4 +1,16 @@
 @extends('layouts.app')
+
+@section('links')
+    <meta name="MDBD:image:src" content="img_path">
+    <meta name="description" content="{!! $product->short_text  !!}">
+    <meta name="robots" content="{{ $tag }}">
+    <meta name="author" content="Kabbya">
+@endsection
+
+@section('title')
+{{ $product->product_name}}
+@endsection
+
 @section('content')
     {{-- Start Navbar  --}}
     @include('layouts.navbar.navbar')
@@ -17,14 +29,14 @@
             @endif
         </div>
               
-        <div class="my-2 px-3 lg:w-5/6 xl:w-4/6 mx-auto bg-white py-3 border shadow">
+        <div class="my-2 px-3 lg:w-5/6  mx-auto bg-white py-3 border shadow">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {{-- product Image  --}}
-                <div class="col-span-1">
+                <div class="col-span-1 md:col-span-1 flex items-center">
                     <div class="owl-carousel owl-theme">
                         @foreach ($product->images as $img)
                             <div class="item">
-                                <img src="{{ asset($img->img_path) }}" alt="{{ $img->name}}">
+                                <img class="h-[350px] block " src="{{ asset($img->img_path) }}" alt="{{ $img->name}}">
                             </div>
                         @endforeach   
                     </div>
@@ -32,7 +44,7 @@
                 {{-- Product Image  --}}
 
                 {{-- product details  --}}
-                <div class="col-span-1">
+                <div class="col-span-1 md:col-span-1">
                     <h3 class="text-xl font-bold text-slate-900">
                         {{ $product->product_name }}
                     </h3>
@@ -40,7 +52,7 @@
                         <span class="text-slate-500 mr-2"> Brand:</span>
                         {{ ($product->brand ) ? $product->brand->name: "No Brand" }}
                     </a>
-                    <p class="text-left text-xs">
+                    <p class="text-left text-md my-2">
                         {!! $product->short_text  !!}
                     </p>
                     <p class="text-slate-500 text-sm mt-1"> 
@@ -57,14 +69,17 @@
                             {{ $product->discount_status }} 
                         </span>
                     </p>
-                    <form action="#">
+                    <form action="{{ route('add.to.cart',$product->slug) }}" method="POST" id="buy-form">
+                        @csrf
+
+                        <input type="hidden" value="{{ $product->slug }}" id="product">
                         <div class="grid grid-cols-3 gap-2 py-3">
-                            <div class="col-span-1">
+                            <div class="col-span-1 md:col-span-1">
                                 <div class="select-color flex flex-col">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                                    <label class="block text-gray-700 text-md ml-2 font-bold mb-2" for="password">
                                         Select Size
                                     </label>
-                                    <select name="color" id="color" class="py-1 rounded-xl w-full">
+                                    <select name="size" id="size" class="py-1 rounded-xl w-full">
                                         <option value=""> </option>
                                         @foreach ($product->sizes as $size)
                                             <option value="{{ $size }}" class="w-full"> {{ $size }} </option>
@@ -74,9 +89,9 @@
                                 </div>
                             </div>
                             
-                            <div class="col-span-1">
+                            <div class="col-span-1 md:col-span-1">
                                 <div class="select-color flex flex-col">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                                    <label class="block text-gray-700 text-md ml-2 font-bold mb-2" for="password">
                                         Select Color 
                                     </label>
                                     <select name="color" id="color" class="py-1 rounded-xl w-full">
@@ -87,22 +102,26 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-1 md:col-span-1">
                                 <div class="select-color flex flex-col">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                                    <label class="block text-gray-700 text-md ml-2 font-bold mb-2" for="password">
                                         Select Quantity
                                     </label>
                                     <input type="number" name="qty" id="qty" value="1" class="py-1 rounded-xl w-full">
                                 </div>
                             </div>
                         </div>
-                        <button type="submit"> Add To Card </button>
+                        <button type="submit" class="py-1 px-4 rounded-xl text-white bg-green-800 transition
+                        duration-300 hover:bg-green-700"> Add To Card </button>
+                        <button type="submit" class="py-1 px-4 ml-4 rounded-xl text-white bg-blue-800 transition
+                        duration-300 hover:bg-blue-700" id="buy-btn"> Buy Now </button>
+
                     </form>
-                    <div class="text-left">
+                    <div class="text-left my-2">
                         <h4 class="text-left font-semibold text-sm text-slate-500"> Share This Product </h4>
                         
                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
-                        <div class="addthis_inline_share_toolbox">
+                        <div class="mt-2 addthis_inline_share_toolbox">
 
                         </div>
             
@@ -113,16 +132,16 @@
                         <h4 class="text-slate-500 font-semibold text-md">
                             All Related Tags
                         </h4>
-                        <div class="flex flex-wrap justify-between">
+                        <div class="mt-2">
                             @foreach ($product->tags as $tag)
-                                <a href="#" class="text-black font-bold underline "> {{ $tag->slug }}</a>
+                                <a href="#" class="text-black font-bold underline mr-2"> {{ $tag->tag_name }} ,</a>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div> 
         </div>
-        <div class="product-description my-6 px-3 lg:w-5/6 xl:w-4/6 mx-auto bg-white py-3 border shadow">
+        <div class="product-description my-6 px-3 lg:w-5/6  mx-auto bg-white py-3 border shadow">
             <div class="">
                 <h4 class="capitalize text-slate-500 text-xl font-bold">
                     Product Details
@@ -132,7 +151,7 @@
                 </p>
             </div>
         </div>
-        <div class="product-description my-8 px-3 lg:w-5/6 xl:w-4/6 mx-auto bg-white py-3 border shadow">
+        <div class="product-description my-8 px-3 lg:w-5/6 mx-auto bg-white py-3 border shadow">
             <div class="">
                 <h4 class="capitalize text-slate-500 text-xl font-bold">
                     Product Comment
@@ -142,9 +161,41 @@
             </div>
         </div>
     </div>
+
+    <div class="my-2 px-3 p-4 xl:p-0 xl:w-5/6 mx-auto py-3 border shadow">
+        <div class="py-4 text-center">
+            @php
+                if ($product->childcategory && $product->subcategory){
+                    $related_products = $product->childcategory->products;
+                }elseif($product->subcategory){
+                    $related_products = $product->subcategory->products;      
+                }else{
+                    $related_products = $product->category->products;
+                }
+                $productCount = $related_products->count();
+            @endphp
+            <a class="text-gray-500 font-semibold"> Related {{ str_plural('Product', $productCount) }} {{ $productCount }} </a>
+        </div>
+        
+           
+        {{-- product Image  --}}
+        <div class="my-2 lg:my-4 pt-3 lg:pt-5">
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+                @foreach ($related_products as $product)
+                <div class="col-span-1"> 
+                    @include('shere._product',[
+                        'product' => $product
+                    ])
+                </div>
+                @endforeach
+            </div>
+        </div>
+        {{-- Product Image  --}}
+    </div>
     <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v13.0" nonce="0dbukkP0"></script>
 @endsection
+
 @section('script')
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6251c2654b60668d"></script>
@@ -170,6 +221,15 @@
         }
     }
 });
+</script>
+
+<script>
+      $('#buy-btn').on('click', function(e){
+        e.preventDefault();
+        var slug = $('#product').val();
+        var url = '/buy/'+ slug;
+        $('#buy-form').attr('action',url);
+    });
 </script>
 
 @endsection

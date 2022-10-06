@@ -17,15 +17,10 @@ class CategotyPolicy
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Category $category)
-    {
-        return $user->role_id == 1;
-    }
-
    
     public function create(User $user)
     {
-        return $user->role_id == 1;
+        return $user->role_id ===  1;
     }
 
     /**
@@ -37,7 +32,7 @@ class CategotyPolicy
      */
     public function update(User $user, Category $category)
     {
-        return $user->role_id == 1;
+        return $user->role_id ===  1;
     }
 
     /**
@@ -49,7 +44,7 @@ class CategotyPolicy
      */
     public function delete(User $user, Category $category)
     {
-        return $user->role_id == 1;
+        return $user->role_id === 1;
     }
 
     /**

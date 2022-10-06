@@ -18,7 +18,9 @@
             @enderror
        
         {{-- end top nav  --}}
+
         {{-- checkout --}}
+        
         <div class="bg-slate-100 w-full">
             <div class="heading py-3 px-2">
                 <span class="text-slate-800 font-bold ml-2"> Checkout </span>

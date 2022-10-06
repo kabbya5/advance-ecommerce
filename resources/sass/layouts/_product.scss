@@ -1,4 +1,7 @@
 .product{
+    &_img img{
+        height: 240px;
+    }
    &__lable{
        .top{
             background-color:rgb(249 115 22);
