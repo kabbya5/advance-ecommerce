@@ -9,11 +9,14 @@
         </a>        
     </div>
     <div class="col-span-3 lg:col-span-2 mr-3">
-        <form action="" class="w-full flex">
-            <input type="search" name="" id="" class="w-full rounded-md">
-            <button class="bg-amber-600 px-4 rounded-md hidden md:block"> Search </button>
-            <button class="bg-amber-600 px-3 rounded-md md:hidden"> <i class="fas fa-search text-xl"></i> </button>
+        <form class="w-full flex" action="{{ route('search')}}" method="GET">
+            @csrf
+            <input type="search" name="search" id="search" class="w-full rounded-md" value="{{old('search') }}">
+            <button class="bg-amber-600 px-4 rounded-md hidden md:block" type="submit"> Search </button>
         </form>
+        <div id="tags_list" class="z-10 bg-white px-4 fixed w-80 border-2 border-gray-200" style="display: none">
+           
+        </div>
     </div>
     <div class="col-span-1 self-center hidden lg:block cart-toggler ">
         <a href="{{ route('cart') }}" class="text-white ml-4 relative">
@@ -74,6 +77,26 @@
     $(document).ready(function (){
         $('.cart-toggler').hover(function(){
             $('.toggler-item').toggle();
-        })
-    })
+        });
+
+        // autoinpute search 
+        $('#search').keyup(function(){
+            var search = $('#search').val();
+            $.ajax({
+                type:'GET',
+                url:"/ajax/tags/" + search,
+                success:function(data){
+                    $('#tags_list').css('display','block');
+                    $('#tags_list').html(data);
+                }
+            });
+        });
+        $(document).on('click','li',function(){
+            var value = $(this).text();
+            $('#search').val(value);
+            $('#tags_list').css('display','none');
+        });
+        
+    });
+
 </script>

@@ -14,6 +14,7 @@
                 <div class="col-span-5 lg:col-span-4 ">
                     <div class="owl-carousel owl-theme">
                         @foreach ($sliders as $slider)
+                        <a href="{{ route('slider.products',$slider->slug) }}">
                             <div class="item">
                                 <div class="hidden md:block h-full">
                                     <img src="{{ asset($slider->img_1) }}" alt="{{ $slider->slug }}" class="h-full md:h-64 w-full hidden md:block">
@@ -22,6 +23,8 @@
                                     <img src="{{ asset($slider->img_2) }}" alt="{{ $slider->slug }}" class="h-64  w-full md:hidden">
                                 </div>      
                             </div>
+                        </a>
+                            
                         @endforeach
                     </div>
                 </div>  
@@ -92,7 +95,7 @@
 
         {{-- End Free Shippin  --}}
 
-        {{-- start tag  --}}
+        {{-- SAtart Tag  --}}
         <section class="tags mt-3 pt-3 md:my-8"> 
             <h2 class="text-center py-4 font-bold text-slate-800 text-3xl md:mb-6 lg:text-left lg:pl-4"> Trending Tags </h2>
             <div class="grid grid-cols-3 lg:gap-3 xl:grid-cols-5">
@@ -108,11 +111,7 @@
                 @endforeach
             </div>
         </section>
-        {{-- end tag  --}}
-
-       
-
-    
+        {{-- End Tag  --}}
 
         {{-- Resent View  --}}
         @auth

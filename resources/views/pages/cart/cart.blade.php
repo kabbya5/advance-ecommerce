@@ -180,7 +180,7 @@
         {{-- End Coupon  --}}
 
         <div class="flex flex-col-reverse  md:flex-row justify-between p-5">
-            <a href="" class="my-5 text-center bg-blue-800 p-2 text-white rounded-md md:my-0"> Continue Shopping </a>
+            <a href="{{ route('free.shipping.products') }}" class="my-5 text-center bg-blue-800 p-2 text-white rounded-md md:my-0"> Continue Shopping </a>
             <a href="{{route('cart.checkout')}}" class="text-center bg-blue-800 p-2 text-white rounded-md"> Confirm Order </a>
         </div>
 

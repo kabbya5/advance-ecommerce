@@ -115,9 +115,8 @@ class OrderController extends Controller
 
         $this->sendOrderConfirmationMail($input,$data,$cart);
         $this->sendAdminOrderConfirmationMail($input,$data,$cart);
-        return back();
+        return redirect()->route('dashboard');
     }
-
     public function sendOrderConfirmationMail($input,$data,$cart)
     {
         Mail::to($data['email'])->send(new OrderMail($input,$data,$cart));

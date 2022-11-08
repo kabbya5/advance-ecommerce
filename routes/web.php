@@ -28,6 +28,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ResentViewController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\UserSearchController;
 
 // user 
 
@@ -54,12 +55,17 @@ Route::get('/',[WelcomeController::class,'welcome'])->name('welcome.page');
 Route::get('/free/shippin/products',[ShopController::class,'free_shipping_products'])->name('free.shipping.products');
 Route::get('/category/products/{category}',[ShopController::class,'categoryProducts'])->name('category.products');
 Route::get('/products/{tag}',[ShopController::class,'tagProducts'])->name('tag.products');
-
-Route::get('/product/{slug}',[WelcomeController::class,'product_show'])->name('product.show');
+Route::get('/products/{slider}',[ShopController::class,'sliderProducts'])->name('sliger.products');
+Route::get('/products/{slug}',[WelcomeController::class,'product_show'])->name('product.show');
 
 Route::get('/{user}/resent_view_itmes',[ResentViewController::class,'user_all_resent_view'])->name('all.resent.view')->middleware('auth');
 //Contact
 Route::resource('contacts',ContactController::class);
+
+//Search 
+
+Route::get('/ajax/tags/{query}', [UserSearchController::class,'searchTags'])->name('search.tags');
+Route::get('/search/tags', [UserSearchController::class,'search'])->name('search');
 
 // Cart
 Route::get('/cart/add/{id}/',[CartController::class,'addCart'])->name('add.cart');

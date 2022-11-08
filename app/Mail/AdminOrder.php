@@ -25,7 +25,6 @@ class AdminOrder extends Mailable
         $this->data = $data;
         $this->cart = $cart;
     }
-
     /**
      * Build the message.
      *

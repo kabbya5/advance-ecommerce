@@ -17,11 +17,11 @@ class WelcomeController extends Controller
 {
     public function welcome(){
         $sliders = Slider::where('status',1)->get();
-        $brands = Brand::latest()->take(6)->get();
-        $tags = Tag::take(6)->get();
-        $products = Product::take(12)->get(); 
-        $resent_view_products = ResentView::where('user_id',Auth::id())->orderBy('created_at','desc')->limit(9)->get();
-        $free_shipping_products = Product::where('free_shipping',1)->latest()->take(8)->get();
+        $brands = Brand::latest()->take(10)->get();
+        $tags = Tag::take(10)->get();
+        $products = Product::take(14)->get(); 
+        $resent_view_products = ResentView::where('user_id',Auth::id())->orderBy('created_at','desc')->limit(14)->get();
+        $free_shipping_products = Product::where('free_shipping',1)->latest()->take(14)->get();
 
         return view ('welcome',compact(
             'sliders',
